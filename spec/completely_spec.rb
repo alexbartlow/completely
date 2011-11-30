@@ -29,6 +29,15 @@ describe UserCompletion do
       it "should be the percent of the completed scores of each step" do
         subject.completion_percent.should == '66%'
       end
+
+      it "should render a progress_bar" do
+        html = subject.progress_bar
+        doc = Nokogiri::XML(html)
+
+        node = doc.css("div.progress_bar div.progress")[0]
+        node[:style].should == "width:#{subject.completion_percent}"
+        node.text.should == subject.completion_percent
+      end
     end
 
     it "should be able to define a path for steps" do

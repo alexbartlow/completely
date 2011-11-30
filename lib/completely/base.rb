@@ -70,6 +70,16 @@ module Completely
       "%i%%" % ((self.completion_score.to_f / self.possible_score.to_f) * 100.0)
     end
 
+    def progress_bar
+      html= Builder::XmlMarkup.new
+      html.div(:class => 'progress_bar') do
+        html.div(:class => 'progress', :style => "width:#{completion_percent}") do
+          html.text! completion_percent
+        end
+      end
+      html.target!
+    end
+
     def to_html
       html = Builder::XmlMarkup.new
       tag, *classes = *self.class.list_elt.split('.')
