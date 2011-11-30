@@ -67,7 +67,7 @@ module Completely
     end
 
     def completion_percent
-      self.completion_score.to_f / self.possible_score.to_f
+      "%i%%" % ((self.completion_score.to_f / self.possible_score.to_f) * 100.0)
     end
 
     def to_html

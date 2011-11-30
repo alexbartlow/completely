@@ -27,7 +27,7 @@ describe UserCompletion do
 
     context "completion_percent" do
       it "should be the percent of the completed scores of each step" do
-        ("%.2f" % subject.completion_percent).should == '0.67'
+        subject.completion_percent.should == '66%'
       end
     end
 
