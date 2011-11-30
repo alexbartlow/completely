@@ -14,12 +14,3 @@ class UserCompletion < Completely::Base
   completed_class 'done'
 end
 
-class User
-  def id
-    'some-id'
-  end
-
-  def dynamic_completed?
-    true
-  end
-end

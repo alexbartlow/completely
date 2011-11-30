@@ -5,3 +5,5 @@ module Completely
 end
 
 require 'completely/base'
+require 'completely/step'
+require 'completely/step_instance'

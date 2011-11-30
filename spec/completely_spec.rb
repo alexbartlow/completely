@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'spec/user_completion'
+require 'spec/user'
 require 'nokogiri'
 describe UserCompletion do
   context "Class" do
