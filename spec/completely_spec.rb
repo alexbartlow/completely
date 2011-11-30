@@ -11,6 +11,25 @@ describe UserCompletion do
   end
   context "instance" do
     subject { UserCompletion.new(User.new) }
+
+    context "completion_score" do
+      it "should be the total of the completed scores of each step" do
+        subject.completion_score.should == 20
+      end
+    end
+
+    context "posible_score" do
+      it "should be the total of the scores of each step" do
+        subject.possible_score.should == 30
+      end
+    end
+
+    context "completion_percent" do
+      it "should be the percent of the completed scores of each step" do
+        ("%.2f" % subject.completion_percent).should == '0.67'
+      end
+    end
+
     it "should be able to define a path for steps" do
       subject.steps.first.path.should == '/profile/new'
     end

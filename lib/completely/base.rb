@@ -34,10 +34,11 @@ module Completely
         @steps ||= []
       end
 
-      def step(name, &block)
+      def step(name, opts = {}, &block)
         steps << Step.new.tap do |s|
           s.name = name
           s.block = block
+          s.score = opts.fetch(:score) {10}
         end
       end
     end
@@ -45,6 +46,7 @@ module Completely
     def steps
       @steps ||= self.class.steps.map do |step|
         si = StepInstance.new
+        si.step = step
         si.object @object
         si.instance_eval(&step.block)
         si.name ||= step.name
@@ -54,6 +56,18 @@ module Completely
 
     def initialize(object)
       @object = object
+    end
+
+    def completion_score
+      self.steps.inject(0) {|sum, step| (step.completed ? step.step.score : 0) + sum}
+    end
+
+    def possible_score
+      self.class.steps.inject(0) {|sum, step| step.score + sum}
+    end
+
+    def completion_percent
+      self.completion_score.to_f / self.possible_score.to_f
     end
 
     def to_html
@@ -77,11 +91,13 @@ module Completely
 
   class Step
     attr_accessor :name
+    attr_accessor :score
     attr_accessor :block
   end
 
   class StepInstance
     attr_accessor :name
+    attr_accessor :step
     def method_missing(symb, *args, &block)
       ivar = '@'+symb.to_s
       if args.empty?
