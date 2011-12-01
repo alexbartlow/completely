@@ -24,12 +24,27 @@ end
 
 And then in your view:
 
-```ruby
+```erb
   <% progress = UserHelper::UserCompletion.new(current_user) %>
   <%= progress.progress_bar.html_safe %>
   <%= progress.to_html.html_safe %>
 ```
 
-You are expected to style it using CSS.
+Which results in the following output:
 
+```html
+<div class="progress_bar">
+  <div class="progress" style="width:66%">66%</div>
+</div>
+<ul class="user-completion">
+  <li class="completion-item">
+    <a href="/profile/new">Set up your profile</a>
+  </li>
+  <li class="completion-item done">
+    <a href="/profile/some-id">Set up your dynamic profile</a>
+  </li>
+</ul>
+```
+
+You are expected to style it using CSS.
 
